@@ -59,7 +59,7 @@ public class TreeVisualizer extends Application {
         loadAlphabet(decoderTree);
 
         inputField = new TextField();
-        inputField.setPromptText("Digite uma palavra, por exemplo SOS");
+        inputField.setPromptText("Digite uma palavra");
 
         Button encodeButton = new Button("Codificar e animar");
         Button decodeButton = new Button("Decodificar");
@@ -209,7 +209,7 @@ public class TreeVisualizer extends Application {
 
                         statusLabel.setText(
                                 "Inserção concluída. "
-                                        + "Você pode reproduzir o áudio."
+                                        + "Você pode escutar o áudio."
                         );
                     }
                 })
@@ -301,14 +301,13 @@ public class TreeVisualizer extends Application {
         int dotDuration = 220;
         int dashDuration = dotDuration * 3;
 
-        // Pausa entre os bipes da mesma letra (1 unidade no padrão Morse)
+        // Pausa entre os bipes da mesma letra
         int symbolGap = dotDuration;
 
-        // Pausa extra entre letras. Como cada símbolo já termina com
-        // symbolGap, somamos só o que falta para chegar a 3 unidades.
+        // Pausa extra entre letras
         int letterGap = dotDuration * 2;
 
-        // Pausa extra entre palavras (7 unidades no total)
+        // Pausa extra entre palavras
         int wordGap = dotDuration * 5;
 
         try {
@@ -317,7 +316,7 @@ public class TreeVisualizer extends Application {
 
                 if (symbol == '.') {
                     tone(line, sampleRate, dotDuration);
-                    // ALTERADO: silêncio escrito no áudio, não Thread.sleep
+                    // silêncio escrito no áudio, não Thread.sleep
                     silence(line, sampleRate, symbolGap);
 
                 } else if (symbol == '-') {
@@ -332,7 +331,7 @@ public class TreeVisualizer extends Application {
                 }
             }
 
-            // Espera todo o áudio do buffer terminar de tocar
+            // Espera o áudio do buffer terminar de tocar
             line.drain();
         } finally {
             line.stop();
@@ -350,8 +349,8 @@ public class TreeVisualizer extends Application {
 
         double frequency = 650;
 
-        // NOVO: fade de 8 ms no início e no fim evita o "clique"
-        // que faz os bipes parecerem grudados
+
+
         int fade = (int) (sampleRate * 0.008);
 
         for (int i = 0; i < samples; i++) {
@@ -371,7 +370,7 @@ public class TreeVisualizer extends Application {
         line.write(buffer, 0, buffer.length);
     }
 
-    // NOVO: escreve amostras zeradas = silêncio de verdade no áudio
+    //  amostras zeradas = silêncio  no áudio
     private void silence(
             SourceDataLine line,
             float sampleRate,
